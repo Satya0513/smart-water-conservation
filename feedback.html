@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feedback | Smart Water Conservation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Navbar Styling */
+    .navbar-custom {
+      background: transparent;
+      position: absolute;
+      width: 100%;
+      z-index: 10;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: white !important;
+    }
+    .navbar-nav .nav-link {
+      color: white !important;
+      margin: 0 10px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #ffdd57 !important;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      height: 100vh;
+      background: linear-gradient(to bottom right, #001f3f, #003366), url('https://images.unsplash.com/photo-1502741338009-cac2772e18bc') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+    .hero-section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      animation: fadeInDown 1s ease-in-out;
+    }
+    .hero-content p {
+      font-size: 1.3rem;
+      animation: fadeInUp 1.2s ease-in-out;
+    }
+
+    @keyframes fadeInDown {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Feedback Form */
+    .feedback-form {
+      padding: 60px 15px;
+      background: #f9f9f9;
+    }
+
+    /* Testimonial Styling */
+    .card img {
+      object-fit: cover;
+      border: 3px solid #007BFF;
+    }
+    .card-text {
+      font-size: 0.95rem;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">💧 Smart Water Conservation</a>
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#chatbot">AI Chatbot</a></li>
+        <li class="nav-item"><a class="nav-link" href="location.html"> Contact us</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        <li class="nav-item"><a class="nav-link active" href="feedback.html">Feedback</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-section">
+  <div class="hero-content">
+    <h1>Feedback</h1>
+    <p>We value your opinion — help us improve!</p>
+  </div>
+</div>
+
+<!-- Feedback Form -->
+<div class="feedback-form">
+  <div class="container">
+    <h2 class="text-center mb-4">Share Your Feedback</h2>
+    <form>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Your Name" required>
+        </div>
+        <div class="col-md-6">
+          <input type="email" class="form-control" placeholder="Your Email" required>
+        </div>
+      </div>
+      <div class="mb-3">
+        <textarea class="form-control" rows="4" placeholder="Write your feedback here..." required></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Rate Us:</label><br>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" value="5">
+          <label class="form-check-label">⭐⭐⭐⭐⭐</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" value="4">
+          <label class="form-check-label">⭐⭐⭐⭐</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" value="3">
+          <label class="form-check-label">⭐⭐⭐</label>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Submit Feedback</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Testimonials -->
+<div class="container my-5">
+  <h2 class="text-center mb-4">What Users Are Saying 💬</h2>
+  <div class="row g-4">
+
+    <!-- Testimonial 1 -->
+    <div class="col-md-4">
+      <div class="card shadow border-0 h-100">
+        <div class="card-body text-center">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="rounded-circle mb-3" width="80" height="80">
+          <h5 class="card-title">Aaradhya Sharma</h5>
+          <p class="text-warning">⭐⭐⭐⭐⭐</p>
+          <p class="card-text">“The AI chatbot helped detect a water leak we weren’t even aware of. This is amazing work!”</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial 2 -->
+    <div class="col-md-4">
+      <div class="card shadow border-0 h-100">
+        <div class="card-body text-center">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="rounded-circle mb-3" width="80" height="80">
+          <h5 class="card-title">Rahul Verma</h5>
+          <p class="text-warning">⭐⭐⭐⭐</p>
+          <p class="card-text">“I liked the insights and alerts. UI is very clean too. Just add more local language support.”</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial 3 -->
+    <div class="col-md-4">
+      <div class="card shadow border-0 h-100">
+        <div class="card-body text-center">
+          <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User" class="rounded-circle mb-3" width="80" height="80">
+          <h5 class="card-title">Sneha Patil</h5>
+          <p class="text-warning">⭐⭐⭐⭐⭐</p>
+          <p class="card-text">“A must-have project for every smart home! Very thoughtful features and great design.”</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
