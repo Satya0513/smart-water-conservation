@@ -52,8 +52,8 @@
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#chatbot">AI Chatbot</a></li>
-           <li class="nav-item"><a class="nav-link" href="calculator.html">calculator</a></li>
-          <li class="nav-item"><a class="nav-link" href="location.html">Contact us</a></li>
+          <li class="nav-item"><a class="nav-link active" href="calculator.html">Calculator</a></li>
+          <li class="nav-item"><a class="nav-link" href="location.html">Contact Us</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
           <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
         </ul>
@@ -116,50 +116,51 @@
 
   <footer class="text-center">
     <div class="container">
-      <p class="mb-1">🚰 This tool helps estimate daily household water usage and gives conservation tips.</p>
+      <p class="mb-1">🚰 This tool estimates daily household water usage and gives conservation tips.</p>
       <p class="mb-0">© 2025 AquaSmart | Smart Water Awareness | Built with 💧 for a sustainable future.</p>
     </div>
   </footer>
 
   <script>
-    document.getElementById("waterForm").addEventListener("submit", function(e) {
+    document.getElementById("waterForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
       const people = parseInt(document.getElementById("people").value);
-      const shower = parseInt(document.getElementById("shower").value) * 50;
-      const toilet = parseInt(document.getElementById("toilet").value) * 10;
-      const brush = parseInt(document.getElementById("brush").value) * 2;
-      const clothes = parseInt(document.getElementById("clothes").value) * 70;
-      const dishes = parseInt(document.getElementById("dishes").value) * 20;
-      const cooking = parseInt(document.getElementById("cooking").value) * 10;
+      if (people <= 0 || isNaN(people)) {
+        alert("Please enter a valid number of people.");
+        return;
+      }
 
-      const total = shower + toilet + brush + clothes + dishes + cooking;
+      const getVal = (id, multiplier) => parseInt(document.getElementById(id).value || 0) * multiplier;
+
+      const total = getVal("shower", 50) + getVal("toilet", 10) + getVal("brush", 2) +
+                    getVal("clothes", 70) + getVal("dishes", 20) + getVal("cooking", 10);
       const perPerson = total / people;
       const ideal = 135;
       const diff = perPerson - ideal;
 
-      let message = `
+      let outputMsg = `
         Total Usage: <strong>${total}</strong> liters/day<br>
         Per Person: <strong>${perPerson.toFixed(1)}</strong> liters/day<br>
         Recommended: <strong>${ideal}</strong> liters/day/person<br>
       `;
 
-      let suggestions = [];
+      const suggestions = [];
 
       if (diff > 0) {
-        message += `<span class='text-danger'>⚠️ Overuse by ${diff.toFixed(1)} L/person/day. Try to conserve.</span>`;
-        if (shower > 0) suggestions.push("Take shorter showers or install low-flow shower heads.");
-        if (toilet > 0) suggestions.push("Use dual flush toilets or flush less frequently.");
-        if (clothes > 0) suggestions.push("Wash full loads only in washing machine.");
-        if (dishes > 0) suggestions.push("Use basin while washing dishes instead of running tap.");
-        if (brush > 0) suggestions.push("Turn off tap while brushing your teeth.");
+        outputMsg += `<span class='text-danger'>⚠️ Overuse by ${diff.toFixed(1)} L/person/day. Try to conserve.</span>`;
+        if (getVal("shower", 1)) suggestions.push("Take shorter showers or install low-flow shower heads.");
+        if (getVal("toilet", 1)) suggestions.push("Use dual flush toilets or flush less frequently.");
+        if (getVal("brush", 1)) suggestions.push("Turn off tap while brushing your teeth.");
+        if (getVal("clothes", 1)) suggestions.push("Wash only full loads in the washing machine.");
+        if (getVal("dishes", 1)) suggestions.push("Use a basin while washing dishes instead of running tap.");
       } else {
-        message += `<span class='text-success'>✅ You are within the ideal usage limit. Keep it up! 💚</span>`;
-        suggestions.push("Continue your great conservation habits!");
+        outputMsg += `<span class='text-success'>✅ You are within the ideal usage limit. Great job! 💚</span>`;
+        suggestions.push("Keep up your excellent water-saving habits!");
       }
 
       document.getElementById("result").classList.remove("d-none");
-      document.getElementById("output").innerHTML = message;
+      document.getElementById("output").innerHTML = outputMsg;
 
       const tipsList = document.getElementById("tips-list");
       tipsList.innerHTML = "";
