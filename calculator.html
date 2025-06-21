@@ -122,57 +122,72 @@
   </footer>
 
   <script>
-    document.getElementById("waterForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+document.getElementById("waterForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
 
-      const people = parseInt(document.getElementById("people").value);
-      if (people <= 0 || isNaN(people)) {
-        alert("Please enter a valid number of people.");
-        return;
-      }
+  const people = parseInt(document.getElementById("people").value);
+  const getVal = (id) => parseInt(document.getElementById(id).value || 0);
 
-      const getVal = (id, multiplier) => parseInt(document.getElementById(id).value || 0) * multiplier;
+  const data = {
+    people,
+    shower: getVal("shower"),
+    toilet: getVal("toilet"),
+    brush: getVal("brush"),
+    clothes: getVal("clothes"),
+    dishes: getVal("dishes"),
+    cooking: getVal("cooking")
+  };
 
-      const total = getVal("shower", 50) + getVal("toilet", 10) + getVal("brush", 2) +
-                    getVal("clothes", 70) + getVal("dishes", 20) + getVal("cooking", 10);
-      const perPerson = total / people;
+  try {
+    const res = await fetch("http://localhost:3000/calculator", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      const perPerson = result.data.perPerson;
+      const total = result.data.total;
       const ideal = 135;
       const diff = perPerson - ideal;
 
-      let outputMsg = `
+      let msg = `
         Total Usage: <strong>${total}</strong> liters/day<br>
         Per Person: <strong>${perPerson.toFixed(1)}</strong> liters/day<br>
         Recommended: <strong>${ideal}</strong> liters/day/person<br>
       `;
 
-      const suggestions = [];
-
+      const tips = [];
       if (diff > 0) {
-        outputMsg += `<span class='text-danger'>⚠️ Overuse by ${diff.toFixed(1)} L/person/day. Try to conserve.</span>`;
-        if (getVal("shower", 1)) suggestions.push("Take shorter showers or install low-flow shower heads.");
-        if (getVal("toilet", 1)) suggestions.push("Use dual flush toilets or flush less frequently.");
-        if (getVal("brush", 1)) suggestions.push("Turn off tap while brushing your teeth.");
-        if (getVal("clothes", 1)) suggestions.push("Wash only full loads in the washing machine.");
-        if (getVal("dishes", 1)) suggestions.push("Use a basin while washing dishes instead of running tap.");
+        msg += `<span class='text-danger'>⚠️ Overuse by ${diff.toFixed(1)} L/person/day.</span>`;
+        if (data.shower > 0) tips.push("Take shorter showers.");
+        if (data.toilet > 0) tips.push("Flush less frequently.");
       } else {
-        outputMsg += `<span class='text-success'>✅ You are within the ideal usage limit. Great job! 💚</span>`;
-        suggestions.push("Keep up your excellent water-saving habits!");
+        msg += `<span class='text-success'>✅ You're within the ideal range!</span>`;
+        tips.push("Keep up the great work!");
       }
 
       document.getElementById("result").classList.remove("d-none");
-      document.getElementById("output").innerHTML = outputMsg;
+      document.getElementById("output").innerHTML = msg;
 
       const tipsList = document.getElementById("tips-list");
       tipsList.innerHTML = "";
-      suggestions.forEach(tip => {
+      tips.forEach(tip => {
         const li = document.createElement("li");
         li.textContent = tip;
         tipsList.appendChild(li);
       });
 
       document.getElementById("tips").classList.remove("d-none");
-    });
-  </script>
+    }
+  } catch (err) {
+    alert("Failed to save data. Please try again.");
+  }
+});
+</script>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
