@@ -63,7 +63,14 @@ app.post('/calculator', async (req, res) => {
     };
 
     await db.collection("usageData").insertOne(record);
-    res.send({ message: "✅ Calculator data saved", total, perPerson });
+    res.send({
+  success: true,
+  data: {
+    total,
+    perPerson
+  }
+});
+
   } catch (err) {
     console.error("❌ Error saving calculator data:", err);
     res.status(500).send({ error: "Failed to store calculator data" });
